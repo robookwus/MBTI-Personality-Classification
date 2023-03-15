@@ -1,8 +1,9 @@
-# !pip install pmaw
+__author__ = "Jan Stanicki"
 import praw
 import pandas as pd
 from praw.models import MoreComments
 import os
+import matplotlib.pyplot as plt
 
 from pmaw import PushshiftAPI
 import datetime as dt
@@ -20,8 +21,6 @@ reddit = praw.Reddit(
 
 # approach with pmaw
 # collect all comments and meta data
-from pmaw import PushshiftAPI
-import datetime as dt
 years = [2018, 2019, 2020, 2021, 2022]
 api = PushshiftAPI()
 year=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -82,7 +81,6 @@ def remove_duplicates():
     return total_authors_df
 remove_duplicates()
 
-import matplotlib.pyplot as plt
 authors_df = remove_duplicates()
 (
     
@@ -90,18 +88,9 @@ authors_df = remove_duplicates()
     .value_counts()
     .plot.bar()
     #.savefig('mbti_authors_dist.png')
-)    
+)
 
 
-# approach with pmaw
-# collect all comments and meta data
-# for sparsely represented subreddits
-"""
-Collect all comments from bottom 8 personality types.
-Stores them in csv in the respective folders.
-"""
-from pmaw import PushshiftAPI
-import datetime as dt
 years = [2018, 2019, 2020, 2021, 2022]
 class_subreddits = ['ESFJ', 'ESTJ', 'ISFJ', 'ESFP', 'ISTJ', 'ENFJ', 'ISFP', 'ESTP']
 api = PushshiftAPI()
@@ -186,7 +175,7 @@ def merge_authors():
     return enriched_authors_df
 merge_authors()
 
-import matplotlib.pyplot as plt
+
 authors_df = pd.read_csv(f'./enriched_authors_cleaned.csv')
 print(authors_df.tail(50)) 
 (
@@ -235,66 +224,3 @@ def add_binary_labels():
     
     return mbti_authors_df, enriched_authors_df
 add_binary_labels()
-
-
-
-
-import matplotlib.pyplot as plt
-mbti_authors_df = pd.read_csv('./mbti_final_authors.csv')
-enriched_authors_df = pd.read_csv('./enriched_final_authors.csv')
-
-(
-    
-    mbti_authors_df['binary1']
-    .value_counts()
-    .plot.bar()
-)    
-
-(
-    
-    enriched_authors_df['binary1']
-    .value_counts()
-    .plot.bar()
-)
-
-plt.style.use('ggplot')
-orig_dist = pd.read_csv('./mbti_final_authors.csv')
-new_dist = pd.read_csv(f'./enriched_final_authors.csv')
-"""
-(
-    orig_dist['binary1'].value_counts().rename('Original').to_frame()
-    .join(new_dist['binary1'].value_counts().rename('Balanced').to_frame())
-    .join(orig_dist['binary2'].value_counts().rename('Original').to_frame())
-    .join(new_dist['binary2'].value_counts().rename('Balanced').to_frame())
-    .join(orig_dist['binary3'].value_counts().rename('Original').to_frame())
-    .join(new_dist['binary3'].value_counts().rename('Balanced').to_frame())
-    .join(orig_dist['binary4'].value_counts().rename('Original').to_frame())
-    .join(new_dist['binary4'].value_counts().rename('Balanced').to_frame())
-    .plot(kind='bar',figsize=(8, 4))
-)
-"""
-
-graph_df = orig_dist['binary1'].value_counts().rename('Original').to_frame()\
-               .join(new_dist['binary2'].value_counts().rename('Balanced').to_frame())
-
-graph_df.plot(kind='bar',figsize=(8, 4))
-
-
-graph_df = orig_dist['binary2'].value_counts().rename('Original').to_frame()\
-               .join(new_dist['binary2'].value_counts().rename('Balanced').to_frame())
-
-graph_df.plot(kind='bar',figsize=(8, 4))
-
-
-graph_df.plot(kind='bar',figsize=(8, 4))
-
-graph_df = orig_dist['binary3'].value_counts().rename('Original').to_frame()\
-               .join(new_dist['binary3'].value_counts().rename('Balanced').to_frame())
-
-graph_df.plot(kind='bar',figsize=(8, 4))
-
-graph_df = orig_dist['binary4'].value_counts().rename('Original').to_frame()\
-               .join(new_dist['binary4'].value_counts().rename('Balanced').to_frame())
-
-graph_df.plot(kind='bar',figsize=(8, 4))
-#plt.savefig('compare_authors.png')
