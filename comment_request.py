@@ -1,3 +1,5 @@
+__author__ = "Jan Stanicki"
+
 import requests
 import time
 import pandas as pd
@@ -6,6 +8,8 @@ import csv
 import re
 import pyarrow.feather as feather
 import matplotlib.pyplot as plt
+
+
 def get_comments_from_pushshift(**kwargs):
     r = requests.get("https://api.pushshift.io/reddit/comment/search/",params=kwargs)
     print(r.url)

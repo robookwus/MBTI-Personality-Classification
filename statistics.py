@@ -1,6 +1,10 @@
+__author__ = "Shaptarshi Roy"
+
 import pandas as pd
 import pyarrow.feather as feather
 import matplotlib.pyplot as plt
+
+
 def showstat(dataset, dataset2=None, dataset3=None):
     df1 = dataset.groupby('subreddit').filter(lambda x : len(x)>1000)
     df2 = dataset2.groupby('subreddit').filter(lambda x : len(x)>1000)
