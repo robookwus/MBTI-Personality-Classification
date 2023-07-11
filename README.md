@@ -1,4 +1,4 @@
-Please refer to http://trilinux.org for the Paper and to https://huggingface.co/robookwus for inferencing our trained model.
+Please refer to http://trilinux.org for the paper and to https://huggingface.co/robookwus for inferencing our trained models,
 
 //will write a nice readme about it eventually!
 
